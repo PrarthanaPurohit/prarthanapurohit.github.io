@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prarthana Purohit — UI/UX Designer &amp; Full-Stack Developer</title>
+<meta name="description" content="Portfolio of Prarthana Purohit — UI/UX designer and full-stack developer who ships her own designs. Four live products: wireframes, screens, flows, and the decisions behind them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1b1a; --ink2:#55544f; --ink3:#8a8a83;
+    --table:#edeeec; --sheet:#ffffff; --wfbg:#fafaf8;
+    --wfill:#ececE8; --wline:#c9c9c2; --wtext:#93938c;
+    --pencil:#3b5bdb; --pencil-soft:rgba(59,91,219,.09);
+    --good:#2f7d4f; --warnc:#b06a12;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--table);color:var(--ink);
+    font:16px/1.6 Inter,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased}
+  a{color:var(--pencil);text-decoration:none;border-bottom:1px solid rgba(59,91,219,.35)}
+  a:hover{border-bottom-color:var(--pencil)}
+  :focus-visible{outline:2px solid var(--pencil);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+  button{font:inherit;cursor:pointer}
+
+  /* ---------- masthead ---------- */
+  header.mast{padding:76px 0 40px}
+  .mast h1{font:800 clamp(40px,6.4vw,66px)/1.02 Archivo,Inter,sans-serif;
+    letter-spacing:-.02em;margin:0 0 10px}
+  .mast .role-line{font:600 17px/1.5 Inter;color:var(--ink2);margin:0 0 18px}
+  .mast p.intro{max-width:62ch;color:var(--ink2);margin:0 0 20px}
+  .mast .links{font-size:15px;color:var(--ink3);line-height:2}
+  .mast .links a{margin-right:16px}
+  .squiggle{display:block;margin:14px 0 0}
+
+  /* ---------- sheets on the table ---------- */
+  section.sheet{background:var(--sheet);border:1px solid #e2e3e0;border-radius:8px;
+    box-shadow:0 1px 2px rgba(25,25,20,.05),0 18px 40px -24px rgba(25,25,20,.25);
+    padding:44px 44px 40px;margin:0 auto 58px;max-width:1060px;
+    transition:transform .5s ease,opacity .5s ease,box-shadow .25s ease}
+  section.sheet:nth-of-type(odd){transform:rotate(-.35deg)}
+  section.sheet:nth-of-type(even){transform:rotate(.3deg)}
+  section.sheet:hover{box-shadow:0 2px 4px rgba(25,25,20,.06),0 26px 52px -24px rgba(25,25,20,.32)}
+  .reveal section.sheet{opacity:0;transform:translateY(26px)}
+  .reveal section.sheet.in{opacity:1}
+  .reveal section.sheet.in:nth-of-type(odd){transform:rotate(-.35deg) translateY(0)}
+  .reveal section.sheet.in:nth-of-type(even){transform:rotate(.3deg) translateY(0)}
+  .case-top{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:baseline;margin-bottom:6px}
+  .case-no{font:700 13px/1 Archivo;letter-spacing:.12em;color:var(--ink3)}
+  .sheet h2{font:700 clamp(26px,3.6vw,36px)/1.1 Archivo,Inter,sans-serif;
+    letter-spacing:-.015em;margin:0}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}
+  .chip{font:600 12.5px/1 Inter;letter-spacing:.02em;padding:7px 11px;border-radius:999px;
+    background:var(--ink);color:#fff}
+  .chip.soft{background:transparent;color:var(--ink2);border:1px solid #d8d8d2}
+  .chip a{color:inherit;border:0}
+  .lede{max-width:70ch;color:var(--ink2);margin:0 0 8px}
+  .lede b{color:var(--ink)}
+
+  /* ---------- wireframe → screen spread ---------- */
+  .spread{display:grid;grid-template-columns:1fr 46px 1.35fr;gap:14px;align-items:stretch;margin:26px 0 8px}
+  .spread .between{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+  .panel-cap{font:600 11.5px/1 Inter;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink3);margin:0 0 8px}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0 6px}
+  /* DevConnect-specific 4-col spread: wf | arrow | browse | requests */
+  .dc-spread{display:grid;grid-template-columns:minmax(240px,1.2fr) 46px minmax(280px,1fr) minmax(320px,1.1fr);gap:14px;align-items:stretch;margin:26px 0 8px;grid-auto-rows:minmax(0,auto)}
+  .dc-spread .between{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+
+  /* browser + app frames */
+  .frame{border:1px solid #dcdcd6;border-radius:12px;overflow:hidden;background:#fff;
+    box-shadow:0 1px 0 rgba(0,0,0,.03);transition:transform .2s ease,box-shadow .2s ease}
+  .frame:hover{transform:translateY(-2px);box-shadow:0 10px 24px -14px rgba(25,25,20,.35)}
+  .dc-spread > div .frame{display:flex;flex-direction:column;min-height:0}
+  .dc-spread > div .frame .fbody{flex:1;min-height:0}
+  .dot{width:9px;height:9px;border-radius:50%;background:#d6d6cf}
+  .fbar{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f2f2ee;
+    border-bottom:1px solid #e3e3dd}
+  .urlpill{margin-left:6px;flex:1;font:500 11.5px/1 "SF Mono",Menlo,monospace;color:#8b8b83;
+    background:#fff;border:1px solid #e3e3dd;border-radius:6px;padding:5px 9px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fbody{padding:20px}
+
+  /* wireframe primitives */
+  .wf{background:var(--wfbg)}
+  .wf .fbody{padding:16px}
+  .wb{background:var(--wfill);border:1px solid var(--wline);
+    border-radius:4px;display:flex;align-items:center;justify-content:center;
+    font:600 10.5px/1.2 Inter;letter-spacing:.1em;color:var(--wtext);text-transform:uppercase;
+    text-align:center;padding:4px}
+  .wb.ghost{background:transparent;border-style:dashed}
+  .wl{height:7px;border-radius:4px;background:#dededa}
+  .wrow{display:flex;gap:8px;align-items:center}
+  .wcol{display:flex;flex-direction:column;gap:8px}
+  .wnote{font-family:Caveat;color:var(--pencil);font-size:18px;line-height:1.15}
+
+  /* decisions */
+  .decisions{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0 4px}
+  .note{background:#fbfbf8;border:1px solid #e7e7e0;border-left:3px solid var(--ink);
+    border-radius:6px;padding:14px 15px}
+  .note b{display:block;font:700 14.5px/1.3 Inter;margin-bottom:5px}
+  .note p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.5}
+
+  /* ---------- structured flow chart ---------- */
+  .flow-title{font:600 12px/1 Inter;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink3);margin:48px 0 0}
+  .flowbox{background:#fbfbf8;border:1px solid #e7e7e0;border-radius:10px;
+    padding:20px;margin:12px 0 4px}
+  .flowrow{display:flex;flex-wrap:wrap;align-items:center;row-gap:16px}
+  .fstep{display:flex;align-items:center;min-height:44px;background:#fff;
+    border:1.5px solid var(--ink);border-radius:10px;padding:0 14px;
+    font:600 13px/1.3 Inter;text-align:center}
+  .fstep .n{display:inline-flex;align-items:center;justify-content:center;
+    width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;
+    font:700 10.5px/1 Archivo;margin-right:9px;flex:0 0 auto}
+  .fstep.good{border-color:var(--good);color:var(--good)}
+  .fstep.good .n{background:var(--good)}
+  .fstep.warn{border-color:var(--warnc);color:var(--warnc)}
+  .fstep.warn .n{background:var(--warnc)}
+  .farrow{flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:var(--ink3)}
+  .farrow svg{display:block}
+  .fbranch{display:flex;flex-direction:column;gap:8px;position:relative;
+    border:1.5px dashed #c9c9c2;border-radius:12px;padding:22px 12px 12px}
+  .fbranch::before{content:attr(data-label);position:absolute;top:-9px;left:12px;
+    font:700 10px/1 Inter;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);
+    background:#fbfbf8;padding:2px 7px}
+  .fbranch .fstep{min-height:38px;border-width:1.5px;border-style:dashed;
+    border-color:#a9a9a1;color:var(--ink2);font-weight:500;justify-content:center}
+  .fsub{display:flex;flex-wrap:wrap;align-items:center;row-gap:12px;margin-top:14px;
+    padding-top:14px;border-top:1px dashed #ddddd6}
+  .fsub-label{font:700 10.5px/1 Inter;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--warnc);margin-right:14px}
+  .fsub .fstep{min-height:40px}
+
+  /* ---- OpenVeil mock skin ---- */
+  .fb-ov{background:#fdf7e3;color:#17181c}
+  .ov-nav{display:flex;align-items:center;gap:12px;font:600 12px/1 Inter;color:#3b3c40;margin-bottom:18px}
+  .ov-nav .lg{font:800 14px/1 Archivo;color:#17181c}
+  .ov-nav .sp{flex:1}
+  .ov-pill{border:1px solid #e8e0c8;border-radius:999px;background:#fffdf4;padding:7px 12px;font:600 11px/1 Inter}
+  .ov-pill.dk{background:#17181c;color:#fff;border-color:#17181c}
+  .ov-h{font:800 20px/1.15 Archivo,Inter,sans-serif;letter-spacing:-.015em;margin:0 0 4px}
+  .ov-h .grey{color:#8b8c92}
+  .ov-sub{font-size:12px;color:#5c5d64;margin:8px 0 14px;max-width:44ch}
+  .btn{display:inline-block;font:600 12px/1 Inter;border-radius:999px;padding:9px 14px;border:1px solid transparent}
+  .b-ovblack{background:#17181c;color:#fff}
+  .b-ovghost{border-color:#e2dbc4;background:#fffdf4;color:#17181c}
+  .ov-feat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+  .ov-fcard{border:1px solid #efe7cd;border-radius:9px;background:#fffdf4;padding:10px 11px}
+  .ov-fcard b{display:flex;gap:7px;align-items:baseline;font:700 11px/1.3 Inter;margin-bottom:3px}
+  .ov-fcard b i{font:700 10px/1 Archivo;font-style:normal;color:#fff;background:#17181c;border-radius:5px;padding:3px 5px}
+  .ov-fcard span{font:500 10px/1.5 Inter;color:#6b6c72}
+
+  /* interactive terminal */
+  .term{background:#15161c;border-radius:12px;overflow:hidden;color:#d8dae2;margin-top:14px}
+  .term .tbar{display:flex;align-items:center;gap:6px;padding:9px 12px;
+    font:500 10.5px/1 Menlo,monospace;color:#8e90a0;border-bottom:1px solid #24252e}
+  .tdot{width:8px;height:8px;border-radius:50%}
+  .ttabs{display:flex;border-bottom:1px solid #24252e;overflow-x:auto}
+  .ttab{background:none;border:none;padding:11px 14px;font:600 11px/1 Menlo,monospace;
+    color:#8e90a0;white-space:nowrap;border-bottom:2px solid transparent}
+  .ttab:hover{color:#c9cbd6}
+  .ttab.on{color:#e8eaf2;border-bottom-color:#6f7cff}
+  .tpane{display:none}
+  .tpane.on{display:block}
+  .term pre{margin:0;padding:14px;font:500 11px/1.75 Menlo,monospace;white-space:pre-wrap}
+  .t-ok{color:#8fd97a}.t-info{color:#7aa7d9}.t-key{color:#ffd479}.t-dim{color:#6a6c7c}
+  .ov-hl{border:1px solid #2a2b36;border-radius:8px;background:#1b1c24;padding:10px 12px;margin:2px 14px 14px}
+  .ov-hl b{display:block;font:700 10px/1 Inter;letter-spacing:.12em;color:#8e90a0;margin-bottom:7px}
+  .ov-hl span{display:block;font:500 10.5px/1.7 Inter;color:#c9cbd6}
+
+  /* ---- ngx-l402 mock skin ---- */
+  .fb-ngx{background:#fbfaf7;color:#16170f}
+  .ngx-nav{display:flex;align-items:center;gap:14px;font:600 12px/1 Inter;color:#3a3a30;margin-bottom:18px}
+  .ngx-nav .lg{font-weight:800}
+  .ngx-nav .sp{flex:1}
+  .ngx-kick{font:600 12px/1 "SF Mono",Menlo,monospace;color:#2d5bff;letter-spacing:.06em;margin:0 0 8px}
+  .ngx-h{font:700 21px/1.2 Inter;letter-spacing:-.01em;margin:0 0 8px}
+  .ngx-sub{font-size:12.5px;color:#6b6b5c;margin:0 0 14px;max-width:46ch}
+  .btn2{display:inline-block;font:600 12px/1 Inter;border-radius:8px;padding:9px 13px;border:1px solid transparent}
+  .b-blue{background:#2d5bff;color:#fff}
+  .b-ghost{border-color:#d9d5c8;color:#16170f;background:#fff}
+  .code{background:#11130b;color:#e6e4d6;border-radius:10px;margin-top:16px;
+    font:500 11.5px/1.75 "SF Mono",Menlo,monospace;overflow:hidden}
+  .code .chead{display:flex;justify-content:space-between;align-items:center;
+    padding:8px 12px;border-bottom:1px solid #23251a;color:#7e7e6a;font-size:10.5px}
+  .copychip{border:1px solid #34362a;border-radius:6px;padding:3px 8px}
+  .code pre{margin:0;padding:12px 14px;white-space:pre-wrap}
+  .c-com{color:#6a6a55}.c-key{color:#ffd479}.c-num{color:#d4a3ff}.c-str{color:#b6d77a}
+  .c-ok{color:#9fd97a}
+  .widget{border:1px solid #e4e0d6;border-radius:10px;background:#fff;padding:14px}
+  .wgt-row{display:flex;gap:8px;margin-bottom:10px}
+  .wgt-in{flex:1;border:1px solid #e4e0d6;border-radius:7px;padding:8px 10px;
+    font:500 11.5px/1 Menlo,monospace;color:#6b6b5c;background:#fbfaf7;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wgt-status{font:600 12px/1.5 Menlo,monospace;margin:8px 0 10px}
+  .invoice{border:1px dashed #d9d5c8;border-radius:7px;background:#fbfaf7;
+    font:500 10.5px/1.4 Menlo,monospace;color:#6b6b5c;padding:8px 10px;margin-bottom:10px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wgt-btns{display:flex;flex-wrap:wrap;gap:8px}
+  .btn2.as-btn{border-radius:8px}
+
+  /* ---- DevConnect mock skin ---- */
+  .fb-dc{background:linear-gradient(160deg,#153123,#0e2418);color:#eef0ec}
+  .dc-nav{display:flex;align-items:center;gap:14px;font:600 12px/1 Inter;color:#cfd8d1;margin-bottom:16px}
+  .dc-nav .lg{font:800 14px/1 Archivo;color:#fff}
+  .dc-nav .sp{flex:1}
+  .dc-navav{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#3f6b52,#274736);
+    border:1.5px solid #3f6b52}
+  .dc-card{max-width:260px;margin:16px auto 0;background:#f5f4ee;color:#1a1b18;border-radius:16px;
+    padding:10px 10px 12px;box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 16px 32px -14px rgba(0,0,0,.6);
+    transition:opacity .18s ease,transform .18s ease}
+  .dc-card.swap{opacity:0;transform:translateX(14px) rotate(2deg)}
+  .dc-photo{position:relative;height:104px;border-radius:11px;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;font:700 30px/1 Archivo;color:rgba(255,255,255,.92)}
+  .dc-photo::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(120% 90% at 20% 10%,rgba(255,255,255,.28),transparent 55%)}
+  .dc-photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38px;
+    background:linear-gradient(to top,rgba(10,20,14,.42),transparent)}
+  .dc-online{position:absolute;top:8px;right:8px;z-index:1;display:flex;align-items:center;gap:5px;
+    font:600 9px/1 Inter;color:#eafcef;background:rgba(12,26,18,.55);border:1px solid rgba(255,255,255,.22);
+    border-radius:999px;padding:4px 8px;backdrop-filter:blur(2px)}
+  .dc-online i{width:6px;height:6px;border-radius:50%;background:#5fe08d}
+  .dc-idrow{display:flex;align-items:center;gap:6px;margin:10px 2px 1px}
+  .dc-nm{font:700 15.5px/1.2 Archivo;margin:0}
+  .dc-tick{width:14px;height:14px;border-radius:50%;background:#3f7bf0;color:#fff;flex:0 0 auto;
+    display:inline-flex;align-items:center;justify-content:center;font:800 8.5px/1 Inter}
+  .dc-meta{font:500 11px/1.4 Inter;color:#6a6b62;margin:0 2px 5px}
+  .dc-bio{font:500 11.5px/1.55 Inter;color:#3d3e37;margin:0 2px 12px;min-height:34px}
+  .dc-btns{display:flex;gap:8px}
+  .b-dcdark{background:#101418;color:#fff;flex:1;text-align:center;border-radius:10px;padding:11px 0;
+    font:600 12px/1 Inter;border:none;transition:transform .12s ease,background .12s ease}
+  .b-dcdark:hover{background:#1c2732;transform:translateY(-1px)}
+  .b-dclight{background:#fff;border:1px solid #d9d8cd;color:#1a1b18;flex:1;text-align:center;
+    border-radius:10px;padding:11px 0;font:600 12px/1 Inter;transition:transform .12s ease,background .12s ease}
+  .b-dclight:hover{background:#efeee6;transform:translateY(-1px)}
+  .dc-toast{text-align:center;font:600 11px/1 Inter;color:#9fd9b4;min-height:14px;margin-top:9px}
+  .dc-sec{font:700 9.5px/1 Inter;letter-spacing:.14em;text-transform:uppercase;color:#7fa38d;margin:0 0 7px}
+  .dc-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.10);border-radius:11px;padding:10px 12px;margin-bottom:8px}
+  .dc-av{width:32px;height:32px;border-radius:50%;flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center;font:700 12px/1 Inter;color:#fff}
+  .dc-rn{font:700 12.5px/1.2 Inter;margin:0;color:#fff}
+  .dc-rs{font:500 10.5px/1.35 Inter;color:#a9bfb0;margin:2px 0 0}
+  .dc-chip{margin-left:auto;font:600 11px/1 Inter;border-radius:8px;padding:8px 12px;border:none}
+  .ch-chat{background:#5b64e0;color:#fff}
+  .ch-acc{background:#2a7a4d;color:#eafcef}
+  .ch-rej{background:transparent;color:#e8a9a9;border:1px solid rgba(232,169,169,.4)}
+  .dc-chatbox{background:rgba(8,17,12,.55);border:1px solid rgba(255,255,255,.10);border-radius:12px;
+    overflow:hidden;margin-top:2px}
+  .dc-chathead{display:flex;align-items:center;gap:9px;padding:9px 11px;
+    border-bottom:1px solid rgba(255,255,255,.08)}
+  .dc-chathead .dc-rn{font-size:12px}
+  .dc-chathead .st{font:500 9.5px/1 Inter;color:#7fd99d;margin-top:2px}
+  .dc-msgs{padding:11px 11px 4px;display:flex;flex-direction:column;gap:7px}
+  .dc-bub{max-width:78%;padding:8px 11px;font:500 11.5px/1.4 Inter;border-radius:12px}
+  .dc-bub.them{align-self:flex-start;background:rgba(255,255,255,.10);color:#e6ede8;
+    border-bottom-left-radius:3px}
+  .dc-bub.me{align-self:flex-end;background:#6f6ce0;color:#fff;border-bottom-right-radius:3px}
+  .dc-time{align-self:flex-end;font:500 8.5px/1 Inter;color:#7d9587}
+  .dc-input{display:flex;gap:8px;padding:9px 11px 11px}
+  .dc-in{flex:1;border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:9px 11px;
+    background:rgba(255,255,255,.05);font:500 11.5px/1 Inter;color:#8ba394}
+
+  /* ---- MindfulHub mock skin ---- */
+  .fb-mh{background:linear-gradient(140deg,#7b7ce6,#8f6cd0);color:#fff}
+  .mh-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .mh-hello{font:800 16px/1.2 Archivo;margin:0}
+  .mh-back{margin-left:auto;font:600 10.5px/1 Inter;border:1px solid rgba(255,255,255,.5);
+    border-radius:8px;padding:7px 10px;background:rgba(255,255,255,.16)}
+  .mh-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .mh-card{background:#fff;color:#2b2c33;border-radius:12px;padding:11px 12px;
+    box-shadow:0 6px 16px -8px rgba(30,20,60,.35)}
+  .mh-ic{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    font-size:13px;margin-bottom:7px}
+  .mh-cap{font:700 12px/1.25 Inter;margin:0 0 3px}
+  .mh-min{font:500 10px/1.45 Inter;color:#7b7c86;margin:0}
+  .mh-moods{display:flex;gap:6px;margin:8px 0 10px}
+  .mh-mood{flex:1;border:1.4px solid #e7e6f2;border-radius:10px;background:#fff;
+    display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px;color:#5a5b66;
+    font:600 8.5px/1 Inter;transition:border-color .15s ease,background .15s ease}
+  .mh-mood em{font-style:normal;font-size:15px}
+  .mh-mood:hover{border-color:#b9baf0}
+  .mh-mood.sel{border-color:#7b7ce6;background:#f3f3fd;color:#4b4cc4}
+  .mh-field{border:1px solid #e7e6f2;border-radius:9px;padding:8px 10px;background:#fff;
+    font:500 10.5px/1.3 Inter;color:#9a9ba6;margin-bottom:8px}
+  .mh-ai{display:block;width:100%;text-align:center;border:none;border-radius:9px;padding:9px 10px;color:#fff;
+    font:600 11px/1 Inter;background:linear-gradient(90deg,#f277b8,#ef6d6d);margin-bottom:8px}
+  .mh-sugg{display:none;border:1px solid #f3d3e4;background:#fdf3f8;color:#8a3d68;
+    border-radius:9px;padding:9px 11px;font:500 10.5px/1.5 Inter;margin-bottom:8px}
+  .mh-sugg.on{display:block}
+  .mh-save{display:block;width:100%;text-align:center;border:none;border-radius:9px;padding:9px 10px;color:#fff;
+    font:600 11px/1 Inter;background:linear-gradient(90deg,#6a6bdd,#8b5fbf)}
+
+  @media (max-width:900px){
+    .spread,.dc-spread{grid-template-columns:1fr}
+    .spread .between,.dc-spread .between{flex-direction:row;padding:2px 0}
+    .duo,.decisions,.ov-feat{grid-template-columns:1fr}
+    section.sheet{padding:26px 20px}
+    .farrow{flex-basis:100%;height:26px;transform:rotate(90deg)}
+    .flowrow{row-gap:8px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    section.sheet,.frame,.dc-card,.mh-mood{transition:none}
+    .reveal section.sheet{opacity:1;transform:none}
+  }
+  @media print{
+    body{background:#fff}
+    section.sheet{transform:none!important;box-shadow:none;border-color:#ddd;
+      page-break-inside:avoid;margin-bottom:26px;opacity:1!important}
+    a{border-bottom:none;color:var(--ink)}
+  }
+</style>
+</head>
+<body>
+
+<header class="mast wrap">
+  <h1>Prarthana Purohit</h1>
+  <p class="role-line">UI/UX Designer &amp; Full-Stack Developer — I design products and then I build them.</p>
+  <p class="intro">Four live products below — a hardware-backed media verification system, a developer
+    landing page for payment infrastructure, and two full-stack apps designed and built end to end.
+    For each: the wireframe it starts from, the screen that shipped, the flow underneath, and the
+    decisions that mattered. Everything links to running code — nothing here is a concept.</p>
+  <p class="links">
+    <a href="https://openveil.world" target="_blank" rel="noopener">openveil.world</a>
+    <a href="https://ngx-l402.org" target="_blank" rel="noopener">ngx-l402.org</a>
+    <a href="https://dev-connect-frontend-theta.vercel.app/login" target="_blank" rel="noopener">DevConnect</a>
+    <a href="https://mindful-hub-frontend.vercel.app/" target="_blank" rel="noopener">MindfulHub</a>
+    <a href="mailto:prarthana.purohit07@gmail.com">prarthana.purohit07@gmail.com</a>
+  </p>
+  <svg class="squiggle" width="150" height="14" viewBox="0 0 150 14" fill="none" aria-hidden="true">
+    <path d="M2 9 C 18 2, 30 13, 46 7 S 76 2, 92 8 S 126 13, 148 5" stroke="#3b5bdb" stroke-width="2.4" stroke-linecap="round"/>
+  </svg>
+</header>
+
+<main class="wrap" style="padding:0">
+
+<!-- ================= 01 · OpenVeil ================= -->
+<section class="sheet" id="openveil">
+  <div class="case-top">
+    <span class="case-no">CASE 01</span>
+    <h2>OpenVeil — making truth verifiable</h2>
+  </div>
+  <div class="chips">
+    <span class="chip">Role: sole contributor — hardware to website</span>
+    <span class="chip soft">Raspberry Pi · Rust · Nostr</span>
+    <span class="chip soft"><a href="https://openveil.world" target="_blank" rel="noopener">Live ↗</a></span>
+  </div>
+  <p class="lede">OpenVeilCam is hardware-linked, censorship-resistant image capture built on the Nostr
+    protocol — for journalists, activists, and human-rights defenders whose authentic photos get
+    dismissed as fake while platforms quietly delete the evidence. I built the whole thing alone:
+    the Rust camera runtime on a Raspberry Pi, the cryptographic signing and publishing pipeline,
+    and the website that has to explain it. The design brief for that site was brutal in its
+    simplicity: <b>a system about trust cannot ask you to take its word for anything</b> — so the
+    page shows real terminal output from the real device instead of marketing renders.</p>
+
+  <div class="spread">
+    <div>
+      <p class="panel-cap">Wireframe — hero</p>
+      <div class="frame wf">
+        <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">structure</span></div>
+        <div class="fbody wcol">
+          <div class="wrow"><div class="wb" style="width:82px;height:20px">wordmark</div><span style="flex:1"></span><div class="wb ghost" style="width:78px;height:20px">about</div><div class="wb" style="width:60px;height:20px">github</div></div>
+          <div class="wb ghost" style="height:52px">H1 — three short claims, stacked</div>
+          <div class="wl" style="width:72%"></div><div class="wl" style="width:56%"></div>
+          <div class="wrow"><div class="wb" style="width:104px;height:26px">▶ demo video</div><div class="wb ghost" style="width:66px;height:26px">about</div><div class="wb ghost" style="width:86px;height:26px">architecture</div></div>
+          <div class="wb" style="height:74px">architecture diagram — the one dark object on a light page</div>
+          <p class="wnote" style="margin:2px 0 0">device → capture → sign → publish, drawn once, readable in 10 seconds</p>
+        </div>
+      </div>
+    </div>
+    <div class="between" aria-hidden="true">
+      <svg width="40" height="26" viewBox="0 0 40 26" fill="none"><path d="M2 14 C 12 8, 22 18, 36 12 m-6 -4 6 4 -7 5" stroke="#3b5bdb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <p class="panel-cap">Shipped screen — openveil.world</p>
+      <div class="frame">
+        <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">openveil.world</span></div>
+        <div class="fbody fb-ov">
+          <div class="ov-nav"><span class="lg">OpenVeil</span><span class="sp"></span><span class="ov-pill">About Project</span><span class="ov-pill dk">GitHub</span></div>
+          <p class="ov-h">Capture the Truth.<br><span class="grey">Cryptographically Sealed.</span></p>
+          <p class="ov-sub">OpenVeilCam provides hardware-linked, censorship-resistant image capture built on the Nostr protocol. Because human rights start with undeniable facts.</p>
+          <span class="btn b-ovblack">▶ Watch Demo Video</span>&nbsp;<span class="btn b-ovghost">About Project</span>&nbsp;<span class="btn b-ovghost">Technical Architecture</span>
+          <div class="ov-feat">
+            <div class="ov-fcard"><b><i>1</i> Device identity</b><span>Hardware-linked secp256k1 keypair (Nostr)</span></div>
+            <div class="ov-fcard"><b><i>2</i> Capture frame</b><span>The original image is the canonical source</span></div>
+            <div class="ov-fcard"><b><i>3</i> Sign &amp; publish</b><span>ECDSA attestation → Blossom + Nostr relays</span></div>
+            <div class="ov-fcard"><b><i>✓</i> Verifiable by anyone</b><span>No central authority. No hidden trust.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="panel-cap" style="margin-top:22px">“See it in action” — real terminal output, told as three tabs (click them)</p>
+  <div class="term">
+    <div class="tbar"><span class="tdot" style="background:#e5655e"></span><span class="tdot" style="background:#e0b23f"></span><span class="tdot" style="background:#61b856"></span><span style="margin-left:6px">prarthana@rpi: ~/OpenVeilCam</span></div>
+    <div class="ttabs" role="tablist" aria-label="OpenVeilCam pipeline demo">
+      <button class="ttab on" role="tab" aria-selected="true" data-t="t1">&gt;_ 1. Device Identity</button>
+      <button class="ttab" role="tab" aria-selected="false" data-t="t2">&gt;_ 2. Capture Frame</button>
+      <button class="ttab" role="tab" aria-selected="false" data-t="t3">&gt;_ 3. Sign &amp; Publish</button>
+    </div>
+    <div class="tpane on" id="t1" role="tabpanel">
+      <pre><span class="t-dim">$</span> <span class="t-key">OpenVeilCam --init</span>
+<span class="t-info">INFO</span>  Initialising hardware-linked DeviceIdentity…
+<span class="t-info">INFO</span>  salt loaded · keypair derived (secp256k1)
+<span class="t-ok">✓</span> npub stable across reboots — Nostr-compatible</pre>
+      <div class="ov-hl"><b>HIGHLIGHTS</b>
+        <span>• Deterministic device identity</span>
+        <span>• Hardware-linked key generation</span>
+        <span>• Secure salt persistence</span>
+      </div>
+    </div>
+    <div class="tpane" id="t2" role="tabpanel">
+      <pre><span class="t-dim">$</span> <span class="t-key">OpenVeilCam capture</span>
+<span class="t-info">INFO</span>  image pipeline initialised · capturing frame
+<span class="t-info">INFO</span>  high-resolution JPEG written — canonical source
+<span class="t-ok">✓</span> no metadata manipulation before attestation</pre>
+      <div class="ov-hl"><b>HIGHLIGHTS</b>
+        <span>• Canonical image used for signing</span>
+        <span>• Verifiable chain of trust starts at the sensor</span>
+        <span>• Deepfake swaps prevented by deterministic verification</span>
+      </div>
+    </div>
+    <div class="tpane" id="t3" role="tabpanel">
+      <pre><span class="t-dim">$</span> <span class="t-key">OpenVeilCam publish</span>
+<span class="t-info">INFO</span>  ECDSA signature computed for capture.jpg
+<span class="t-info">INFO</span>  uploading to Blossom · publishing NIP-94 event
+<span class="t-ok">✓</span> accepted  wss://relay.primal.net
+<span class="t-ok">✓</span> accepted  wss://nos.lol · wss://relay.snort.social</pre>
+      <div class="ov-hl"><b>HIGHLIGHTS</b>
+        <span>• ECDSA image attestation</span>
+        <span>• Blossom media storage · NIP-94 metadata</span>
+        <span>• Public verification via Nostr relays</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="flow-title">Flow — from photon to proof</p>
+  <div class="flowbox">
+    <div class="flowrow">
+      <span class="fstep"><span class="n">1</span>Device boots</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">2</span>Identity from hardware entropy</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">3</span>Capture — canonical image</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">4</span>Sign with device key (ECDSA)</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fbranch" data-label="published to both">
+        <span class="fstep">Media → Blossom / IPFS-compatible storage</span>
+        <span class="fstep">Hash + signature + metadata → Nostr relays (NIP-94)</span>
+      </span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep good"><span class="n">✓</span>Anyone verifies, anywhere</span>
+    </div>
+    <div class="fsub">
+      <span class="fsub-label">Edge case</span>
+      <span class="fstep warn"><span class="n">!</span>Metadata stripped / file recompressed</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep good"><span class="n">✓</span>Verification still works — attestation lives on relays, not inside the file</span>
+    </div>
+  </div>
+
+  <div class="decisions">
+    <div class="note"><b>Terminal screenshots as hero images.</b><p>The audience is people who verify claims for a living. Polished product renders would work against the message, so the “See it in Action” section shows the actual Raspberry Pi terminal — my username and all — split into three tabs so the pipeline reads as a story: identity → capture → publish.</p></div>
+    <div class="note"><b>Warm cream, not crypto-dark.</b><p>Every decentralization project ships a black site with neon gradients. OpenVeil is about evidence and human rights, not speculation — so the page is warm paper with black type, and darkness is reserved for the two objects that earn it: the architecture diagram and the terminals. The contrast makes them the obvious focal points.</p></div>
+    <div class="note"><b>Explain in threes, always.</b><p>Device identity → capture → sign &amp; publish. That trio appears in the hero diagram, the tabbed demo, and the feature list — the same mental model at three zoom levels. Seven deep technical features (Rust runtime, ZKP compatibility, enclave support) exist on the page, but only after the simple version has landed.</p></div>
+  </div>
+</section>
+
+<!-- ================= 02 · ngx-l402.org ================= -->
+<section class="sheet" id="ngx">
+  <div class="case-top">
+    <span class="case-no">CASE 02</span>
+    <h2>ngx-l402.org — selling infrastructure you can’t see</h2>
+  </div>
+  <div class="chips">
+    <span class="chip">Role: website design</span>
+    <span class="chip soft">Audience: backend engineers</span>
+    <span class="chip soft"><a href="https://ngx-l402.org" target="_blank" rel="noopener">Live ↗</a></span>
+    <span class="chip soft"><a href="https://github.com/ngx-l402/ngx-l402" target="_blank" rel="noopener">Code ↗</a></span>
+  </div>
+  <p class="lede">An nginx module has no screens. The whole product is a config file, an HTTP&nbsp;402, and
+    money arriving in your node. So the site treats <b>code blocks as the hero images</b> and proves the
+    product with a live payment demo instead of promises. Warm paper, one blue, and a page that reads
+    like very good documentation — because for engineers, docs <b>are</b> the marketing.</p>
+
+  <div class="spread">
+    <div>
+      <p class="panel-cap">Wireframe</p>
+      <div class="frame wf">
+        <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">structure</span></div>
+        <div class="fbody wcol">
+          <div class="wrow"><div class="wb" style="width:74px;height:20px">logo</div><span style="flex:1"></span><div class="wl" style="width:36%"></div><div class="wb ghost" style="width:26px;height:20px">☾</div></div>
+          <div class="wl" style="width:34%;margin-top:6px"></div>
+          <div class="wb ghost" style="height:44px">H1 — one clear claim</div>
+          <div class="wl" style="width:70%"></div>
+          <div class="wrow"><div class="wb" style="width:96px;height:26px">CTA</div><div class="wb ghost" style="width:86px;height:26px">ghost</div></div>
+          <div class="wb" style="height:88px">code block = hero</div>
+          <div class="wb ghost" style="height:64px">live demo widget</div>
+          <p class="wnote" style="margin:2px 0 0">no stock art anywhere — the config <i>is</i> the picture</p>
+        </div>
+      </div>
+    </div>
+    <div class="between" aria-hidden="true">
+      <svg width="40" height="26" viewBox="0 0 40 26" fill="none"><path d="M2 14 C 12 8, 22 18, 36 12 m-6 -4 6 4 -7 5" stroke="#3b5bdb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <p class="panel-cap">Shipped screen</p>
+      <div class="frame">
+        <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">ngx-l402.org</span></div>
+        <div class="fbody fb-ngx">
+          <div class="ngx-nav"><span class="lg">⚡ ngx-l402</span><span>Demo</span><span>Cashu</span><span>Why</span><span>Quickstart</span><span class="sp"></span><span>☾</span></div>
+          <p class="ngx-kick">01 · Overview</p>
+          <p class="ngx-h">Accept Lightning payments in front of any HTTP API.</p>
+          <p class="ngx-sub">An open-source nginx module that puts an L402 paywall on any upstream — two lines of config, eight payment backends, non-custodial.</p>
+          <span class="btn2 b-blue">Quickstart →</span>&nbsp;<span class="btn2 b-ghost">View on GitHub</span>
+          <div class="code">
+            <div class="chead"><span>/etc/nginx/conf.d/api.conf</span><span class="copychip">copy</span></div>
+            <pre><span class="c-com"># put a paywall on any upstream — no API rewrite</span>
+location /v1/ {
+  <span class="c-key">l402</span>                     <span class="c-str">on</span>;
+  <span class="c-key">l402_amount_msat_default</span> <span class="c-num">1000000</span>;  <span class="c-com"># 1,000 sats</span>
+  <span class="c-key">proxy_pass</span>               <span class="c-str">http://upstream</span>;
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="panel-cap" style="margin-top:22px">The live demo — designed state by state (press “Request” to walk the flow)</p>
+  <div class="frame" style="max-width:560px">
+    <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">try it live</span></div>
+    <div class="fbody fb-ngx">
+      <div class="widget" id="ngxDemo">
+        <div class="wgt-row"><span class="wgt-in">https://demo.ngx-l402.org</span><span class="wgt-in" style="flex:0 0 84px">/protected</span><button class="btn2 b-blue as-btn" id="ngxBtn">Request →</button></div>
+        <div id="ngxIdle">
+          <p class="wgt-status" style="color:#6b6b5c">Awaiting request — the endpoint is protected by an L402 paywall.</p>
+        </div>
+        <div id="ngx402" style="display:none">
+          <p class="wgt-status" style="color:#b06a12">402 Payment Required — pay <b>1,000 sats</b></p>
+          <div class="invoice">lnbc10u1p3xnhl2pp5ay7…qqmd9r6h</div>
+          <div class="wgt-btns"><button class="btn2 b-blue as-btn" id="ngxPay">⚡ Pay with WebLN</button><span class="btn2 b-ghost">Open in wallet</span><span class="btn2 b-ghost">Copy invoice</span></div>
+        </div>
+        <div id="ngxOk" style="display:none">
+          <p class="wgt-status" style="color:#2f7d4f;margin-top:0">🔓 200 OK — unlocked. That’s the whole flow: 402 → pay → proof → content.</p>
+          <div class="code" style="margin-top:6px"><pre style="padding:10px 12px"><span class="c-ok">{"reply": "hello, agent.", "tokens": 42}</span></pre></div>
+          <p class="wgt-status" style="color:#6b6b5c;font-weight:500;margin:10px 0 0">…and when the gateway is down, the error message <i>is</i> the docker command to run your own. <button class="btn2 b-ghost as-btn" id="ngxReset" style="margin-left:6px">↺ reset</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="flow-title">Flow — the demo people actually complete</p>
+  <div class="flowbox">
+    <div class="flowrow">
+      <span class="fstep"><span class="n">1</span>Request</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep warn"><span class="n">!</span>402 + invoice</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fbranch" data-label="pay any way">
+        <span class="fstep">⚡ WebLN one-click</span>
+        <span class="fstep">Open in wallet</span>
+        <span class="fstep">Paste proof by hand</span>
+      </span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">3</span>Retry with proof</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep good"><span class="n">✓</span>🔓 Unlocked</span>
+    </div>
+    <div class="fsub">
+      <span class="fsub-label">Edge case</span>
+      <span class="fstep warn"><span class="n">!</span>Gateway unreachable</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">→</span>Error shows the exact fix — a one-line docker run</span>
+    </div>
+  </div>
+
+  <div class="decisions">
+    <div class="note"><b>One accent, everywhere.</b><p>Blue only ever marks something you can click. When color means action, nobody hunts for the buttons.</p></div>
+    <div class="note"><b>Errors that hand you the fix.</b><p>Every failure state in the demo teaches recovery — down to naming the missing CORS header. The unhappy paths took longer to design than the happy one.</p></div>
+    <div class="note"><b>Code stays dark in both themes.</b><p>The site has full light and dark modes, but the terminal never changes costume. Light mode just gets a window into it.</p></div>
+  </div>
+</section>
+
+<!-- ================= 03 · DevConnect ================= -->
+<section class="sheet" id="devconnect">
+  <div class="case-top">
+    <span class="case-no">CASE 03</span>
+    <h2>DevConnect — matchmaking for developers</h2>
+  </div>
+  <div class="chips">
+    <span class="chip">Role: design → code, full stack, solo</span>
+    <span class="chip soft">React · Node/Express · MongoDB</span>
+    <span class="chip soft"><a href="https://dev-connect-frontend-theta.vercel.app/login" target="_blank" rel="noopener">Live ↗</a></span>
+  </div>
+  <p class="lede">A network for developers built on a matchmaking loop instead of an endless feed: you see
+    <b>one person at a time</b> and choose — Connect or Ignore. Mutual interest becomes a connection,
+    connections unlock chat. I designed and built all of it: auth, the card deck, requests, real-time
+    chat, a profile editor with live preview, and a two-tier premium model.</p>
+
+  <div class="dc-spread">
+    <div>
+      <p class="panel-cap">Wireframe — the one-card loop</p>
+      <div class="frame wf">
+        <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">structure</span></div>
+        <div class="fbody wcol">
+          <div class="wrow"><div class="wb" style="width:82px;height:18px">devconnect</div><span style="flex:1"></span><div class="wl" style="width:26%"></div><div class="wb ghost" style="width:24px;height:18px;border-radius:50%">av</div></div>
+          <div class="wb" style="height:64px;max-width:170px;margin:4px auto 0">photo</div>
+          <div class="wcol" style="max-width:170px;margin:0 auto;width:100%">
+            <div class="wl" style="width:60%"></div><div class="wl" style="width:45%"></div>
+            <div class="wrow"><div class="wb" style="flex:1;height:26px">connect</div><div class="wb ghost" style="flex:1;height:26px">ignore</div></div>
+          </div>
+          <p class="wnote" style="margin:6px 0 0">one card, two verbs, zero scroll — the decision <i>is</i> the interface</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="between" aria-hidden="true">
+      <svg width="40" height="26" viewBox="0 0 40 26" fill="none"><path d="M2 14 C 12 8, 22 18, 36 12 m-6 -4 6 4 -7 5" stroke="#3b5bdb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div>
+      <p class="panel-cap">Browse — try the deck: Connect or Ignore</p>
+      <div class="frame" style="height:100%">
+        <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">/ · browse</span></div>
+        <div class="fbody fb-dc">
+          <div class="dc-nav"><span class="lg">DevConnect</span><span class="sp"></span><span>Connections</span><span>Requests</span></div>
+          <div class="dc-card" id="dcCard">
+            <div class="dc-photo" id="dcPhoto" style="height:120px">A</div>
+            <p class="dc-nm" id="dcName">Aarav Mehta</p>
+            <p class="dc-meta" id="dcMeta">Male · 27 years</p>
+            <p class="dc-bio" id="dcBio">Backend dev. Building things that scale.</p>
+            <div class="dc-btns"><button class="b-dcdark" id="dcConnect">Connect</button><button class="b-dclight" id="dcIgnore">Ignore</button></div>
+          </div>
+          <p class="dc-toast" id="dcToast"></p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="panel-cap">Requests &amp; Chat</p>
+      <div class="frame" style="height:100%">
+        <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">/requests · /chat</span></div>
+        <div class="fbody fb-dc">
+          <div class="dc-nav"><span class="lg">DevConnect</span><span class="sp"></span><span>Connections</span><span>Requests</span></div>
+          <p class="dc-sec">Incoming Requests</p>
+          <div class="dc-row"><span class="dc-av" style="background:linear-gradient(135deg,#5b64e0,#3f4bcc)">K</span><div style="flex:1"><p class="dc-rn">Kunal K</p><p class="dc-rs">Male, 30 · "Hey there!"</p></div><span class="dc-chip ch-acc">Accept</span><span class="dc-chip ch-rej" style="margin-left:6px">Reject</span></div>
+          <p class="dc-sec" style="margin-top:8px">Connections</p>
+          <div class="dc-row"><span class="dc-av" style="background:linear-gradient(135deg,#2a7a4d,#1a5535)">R</span><div style="flex:1"><p class="dc-rn">Rebekah M</p><p class="dc-rs">Female, 28 · connected</p></div><span class="dc-chip ch-chat">Chat</span></div>
+          <div class="dc-chatbox" style="margin-top:8px">
+            <div class="dc-chathead">
+              <span class="dc-av" style="width:26px;height:26px;font-size:10px;background:linear-gradient(135deg,#2a7a4d,#1a5535)">R</span>
+              <div><p class="dc-rn" style="font-size:11px">Rebekah M</p><span class="st">● online</span></div>
+            </div>
+            <div class="dc-msgs">
+              <div class="dc-bub them">hii 👋</div>
+              <div class="dc-bub me">Hey! Saw your profile, let's connect!</div>
+              <div class="dc-time">2:41 PM</div>
+            </div>
+            <div class="dc-input"><span class="dc-in">Type a message…</span><span class="dc-chip ch-chat" style="margin-left:0">Send</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="flow-title">Flow — from stranger to conversation (every step is consent)</p>
+  <div class="flowbox">
+    <div class="flowrow">
+      <span class="fstep"><span class="n">1</span>Sign up / log in</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">2</span>Edit profile — with live card preview</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">3</span>Browse — one card at a time</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fbranch" data-label="your choice">
+        <span class="fstep">Connect — sends a request</span>
+        <span class="fstep">Ignore — card leaves, no notification</span>
+      </span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">4</span>They Accept / Reject</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep good"><span class="n">✓</span>Connection → chat unlocks</span>
+    </div>
+    <div class="fsub">
+      <span class="fsub-label">Upgrade path</span>
+      <span class="fstep"><span class="n">$</span>Silver — chat, blue tick, visibility boost, 3 months</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">$</span>Gold — unlimited chat, high visibility, priority support, 6 months</span>
+    </div>
+  </div>
+
+  <div class="decisions">
+    <div class="note"><b>One card, not a grid.</b><p>Early sketches had a browsable grid of developers. It turned people into thumbnails. One full-width card forces you to actually read a person before deciding — and it made the mobile and desktop layouts nearly identical for free.</p></div>
+    <div class="note"><b>The profile editor shows the card you’ll be.</b><p>The edit form sits next to a live preview of your own card, updating as you type. You’re never styling abstract fields — you’re looking at exactly what strangers will judge in three seconds. Completion went up because vanity is a great motivator.</p></div>
+    <div class="note"><b>Chat only after mutual yes.</b><p>Messaging is gated behind an accepted request — no cold DMs by design. It’s more code (requests, accept/reject states, gating) but it’s the difference between a network and an inbox full of “hi.” Building the API myself meant I could enforce it server-side, not just hide a button.</p></div>
+  </div>
+</section>
+
+<!-- ================= 04 · MindfulHub ================= -->
+<section class="sheet" id="mindfulhub">
+  <div class="case-top">
+    <span class="case-no">CASE 04</span>
+    <h2>MindfulHub — a wellness ecosystem in five doors</h2>
+  </div>
+  <div class="chips">
+    <span class="chip">Role: design → code, full stack, solo</span>
+    <span class="chip soft">React · AI mood suggestions</span>
+    <span class="chip soft"><a href="https://mindful-hub-frontend.vercel.app/" target="_blank" rel="noopener">Live ↗</a></span>
+  </div>
+  <p class="lede">A mental-wellness platform that goes past mood tracking: journaling, a five-point mood
+    check-in with <b>AI-powered suggestions</b>, professional counselor profiles with appointment
+    booking, community testimonials, and structured feedback. The design problem was scope — six
+    features could easily become a maze. My answer was a <b>hub</b>: one calm purple dashboard where
+    every feature is a door with a plain-language sentence on it, and every room has one big
+    “Back to Dashboard” button. You always know where you are and how to get home.</p>
+
+  <div class="spread">
+    <div>
+      <p class="panel-cap">Wireframe — hub &amp; spokes</p>
+      <div class="frame wf">
+        <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">structure</span></div>
+        <div class="fbody wcol">
+          <div class="wrow"><div class="wb ghost" style="flex:1;height:22px">“welcome back, friend”</div><div class="wb" style="width:58px;height:22px">logout</div></div>
+          <div class="wrow"><div class="wb" style="flex:1;height:44px">journal</div><div class="wb" style="flex:1;height:44px">mood</div><div class="wb" style="flex:1;height:44px">stories</div></div>
+          <div class="wrow"><div class="wb" style="flex:1;height:44px">counselors</div><div class="wb" style="flex:1;height:44px">feedback</div></div>
+          <div class="wb ghost" style="height:30px">“your wellness journey starts here” — reassurance strip</div>
+          <p class="wnote" style="margin:2px 0 0">cards say what you’ll <i>do</i>, not what the feature is called</p>
+        </div>
+      </div>
+    </div>
+    <div class="between" aria-hidden="true">
+      <svg width="40" height="26" viewBox="0 0 40 26" fill="none"><path d="M2 14 C 12 8, 22 18, 36 12 m-6 -4 6 4 -7 5" stroke="#3b5bdb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+      <p class="panel-cap">Shipped screens — pick a mood, then ask the AI</p>
+      <div class="duo" style="margin:0">
+        <div class="frame">
+          <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">/dashboard</span></div>
+          <div class="fbody fb-mh">
+            <div class="mh-top"><p class="mh-hello">Welcome back, Friend ✨</p><span class="mh-back">Logout</span></div>
+            <div class="mh-grid">
+              <div class="mh-card"><span class="mh-ic" style="background:#eceafd">📖</span><p class="mh-cap">My Journal</p><p class="mh-min">Write your thoughts, feelings, and experiences.</p></div>
+              <div class="mh-card"><span class="mh-ic" style="background:#fde9f2">💗</span><p class="mh-cap">Mood Tracker</p><p class="mh-min">Track emotions, get AI suggestions.</p></div>
+              <div class="mh-card"><span class="mh-ic" style="background:#fdf3df">⭐</span><p class="mh-cap">Testimonials</p><p class="mh-min">Read and share community stories.</p></div>
+              <div class="mh-card"><span class="mh-ic" style="background:#e5f0fd">🧑‍⚕️</span><p class="mh-cap">Find a Counselor</p><p class="mh-min">Book professional support.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="frame">
+          <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="urlpill">/mood</span></div>
+          <div class="fbody fb-mh">
+            <div class="mh-top"><p class="mh-hello">Mood Tracker 💭</p><span class="mh-back">← Back to Dashboard</span></div>
+            <div class="mh-card" style="padding:12px">
+              <p class="mh-cap" style="margin-bottom:2px">How are you feeling today?</p>
+              <div class="mh-moods" id="mhMoods">
+                <button class="mh-mood" data-m="Very Sad"><em>😨</em>Very Sad</button><button class="mh-mood" data-m="Sad"><em>😔</em>Sad</button><button class="mh-mood sel" data-m="Neutral"><em>😐</em>Neutral</button><button class="mh-mood" data-m="Happy"><em>😊</em>Happy</button><button class="mh-mood" data-m="Very Happy"><em>😄</em>Very Happy</button>
+              </div>
+              <div class="mh-field">What happened today? How did it make you feel?</div>
+              <div class="mh-field">Major emotion you felt ▾</div>
+              <button class="mh-ai" id="mhAiBtn">✨ Get AI Suggestions to Improve Mood</button>
+              <div class="mh-sugg" id="mhSugg"></div>
+              <button class="mh-save">Save Mood Entry</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="flow-title">Flow — a check-in, and where it can lead</p>
+  <div class="flowbox">
+    <div class="flowrow">
+      <span class="fstep"><span class="n">1</span>Log in</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">2</span>Dashboard hub</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">3</span>Rate your day — 5 emoji + words</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">4</span>Describe it + pick the major emotion</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fbranch" data-label="your choice">
+        <span class="fstep">✨ Ask for AI suggestions — opt-in</span>
+        <span class="fstep">Just save the entry</span>
+      </span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep good"><span class="n">✓</span>Saved — history grows</span>
+    </div>
+    <div class="fsub">
+      <span class="fsub-label">Needs more than an app</span>
+      <span class="fstep"><span class="n">→</span>Counselor profiles — specialization, rating, credentials, availability</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep good"><span class="n">✓</span>Book Appointment</span>
+    </div>
+  </div>
+
+  <div class="decisions">
+    <div class="note"><b>Emoji + words, never emoji alone.</b><p>The mood scale pairs each face with its label — Very Sad through Very Happy — because a 😐 means different things to different people on different days. It also keeps the scale usable with a screen reader, which matters more here than in most apps.</p></div>
+    <div class="note"><b>AI is a button you press, not a thing that happens.</b><p>“Get AI Suggestions to Improve Mood” is deliberately its own hot-pink action, visually separate from the calm purple “Save.” On your lowest day, unsolicited advice from software is the last thing you want — so the AI waits to be asked. Opt-in was the design; the color contrast is what enforces it.</p></div>
+    <div class="note"><b>A path to real humans.</b><p>An app should know its limits. Counselor cards carry what actually builds trust — specialization, credentials, years of experience, rating, availability — and end in one verb: Book Appointment. The most important flow in a wellness app is the one that leads out of it.</p></div>
+  </div>
+</section>
+
+<!-- ================= process ================= -->
+<section class="sheet" id="process">
+  <div class="case-top">
+    <span class="case-no">HOW I WORK</span>
+    <h2>The same loop, every project</h2>
+  </div>
+  <p class="lede">Nothing exotic — the value is that I run the <b>whole</b> loop myself, from paper to
+    deployed product. What ships is what was designed, because the same person did both.</p>
+  <div class="flowbox" style="margin-top:18px">
+    <div class="flowrow">
+      <span class="fstep"><span class="n">1</span>✏️ Paper sketches</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">2</span>Grayscale wireframes</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">3</span>Hi-fi mockups</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">4</span>Build it — React / APIs</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep"><span class="n">5</span>Use it myself for a week</span>
+      <span class="farrow"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M1 6h14m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="fstep good"><span class="n">✓</span>Cut &amp; refine</span>
+    </div>
+  </div>
+  <div class="decisions" style="margin-top:22px">
+    <div class="note"><b>Every product gets its own skin.</b><p>Forest green for DevConnect, calm purple for MindfulHub, warm cream for OpenVeil and ngx-l402 — each palette comes from what the product is for, and each app commits to one identity instead of borrowing a trend. Range matters more to me than a house style.</p></div>
+    <div class="note"><b>Match the design language to the audience.</b><p>Engineers get terminals and config files as hero images. People having a hard day get soft cards and plain sentences. Same designer, opposite vocabularies — the audience picks the language, not my taste.</p></div>
+    <div class="note"><b>Designing in code keeps me honest.</b><p>I never draw something I can’t build, and I never blame a developer for what shipped. When I work with a team, handoff is a conversation instead of a PDF thrown over a wall — I speak both dialects.</p></div>
+  </div>
+  <div class="chips" style="margin-top:22px">
+    <span class="chip soft">Figma</span><span class="chip soft">pen &amp; paper</span>
+    <span class="chip soft">HTML/CSS</span><span class="chip soft">React</span>
+    <span class="chip soft">Node/Express</span><span class="chip soft">MongoDB</span>
+    <span class="chip soft">Rust</span><span class="chip soft">Raspberry Pi</span>
+    <span class="chip soft">Nostr</span><span class="chip soft">Git</span><span class="chip soft">Vercel</span>
+  </div>
+</section>
+
+<!-- ================= hire ================= -->
+<section class="sheet" id="hire">
+  <div class="case-top">
+    <span class="case-no">WORK WITH ME</span>
+    <h2>Available for contract work — design, build, or both</h2>
+  </div>
+  <p class="lede" style="margin-top:6px">Landing pages and product sites, full app design (flows → wireframes →
+    hi-fi mockups), or design-and-build where I hand you a deployed product instead of a picture of
+    one. Remote, async-friendly. The fastest way to evaluate me: open any of the four links below —
+    they’re all live.</p>
+  <p style="margin:18px 0 6px">
+    <a href="mailto:prarthana.purohit07@gmail.com" style="font-weight:700">prarthana.purohit07@gmail.com</a>
+  </p>
+  <p style="margin:0;color:var(--ink3);font-size:14.5px">
+    <a href="https://openveil.world" target="_blank" rel="noopener">openveil.world</a>
+    &nbsp;·&nbsp; <a href="https://ngx-l402.org" target="_blank" rel="noopener">ngx-l402.org</a>
+    &nbsp;·&nbsp; <a href="https://dev-connect-frontend-theta.vercel.app/login" target="_blank" rel="noopener">DevConnect</a>
+    &nbsp;·&nbsp; <a href="https://mindful-hub-frontend.vercel.app/" target="_blank" rel="noopener">MindfulHub</a>
+  </p>
+</section>
+
+</main>
+
+<div style="height:40px"></div>
+
+<script>
+(function(){
+  /* ---- scroll reveal (respects reduced motion) ---- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce && 'IntersectionObserver' in window){
+    document.body.classList.add('reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:.12});
+    document.querySelectorAll('section.sheet').forEach(function(s){ io.observe(s); });
+  }
+
+  /* ---- OpenVeil terminal tabs ---- */
+  var tabs = document.querySelectorAll('.ttab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('on'); t.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.tpane').forEach(function(p){ p.classList.remove('on'); });
+      tab.classList.add('on'); tab.setAttribute('aria-selected','true');
+      document.getElementById(tab.dataset.t).classList.add('on');
+    });
+  });
+
+  /* ---- ngx-l402 demo state machine ---- */
+  var ngxIdle = document.getElementById('ngxIdle'),
+      ngx402  = document.getElementById('ngx402'),
+      ngxOk   = document.getElementById('ngxOk');
+  function ngxShow(el){
+    [ngxIdle,ngx402,ngxOk].forEach(function(x){ x.style.display='none'; });
+    el.style.display='block';
+  }
+  var ngxBtn = document.getElementById('ngxBtn');
+  if(ngxBtn){
+    ngxBtn.addEventListener('click', function(){ ngxShow(ngx402); });
+    document.getElementById('ngxPay').addEventListener('click', function(){ ngxShow(ngxOk); });
+    document.getElementById('ngxReset').addEventListener('click', function(){ ngxShow(ngxIdle); });
+  }
+
+  /* ---- DevConnect card deck ---- */
+  var deck = [
+    {i:'A', name:'Aarav Mehta',  meta:'Male · 27 years',   bio:'Backend dev. Building things that scale.'},
+    {i:'S', name:'Sana Iqbal',   meta:'Female · 25 years', bio:'Frontend + design systems. Pixel person.'},
+    {i:'V', name:'Vikram Rao',   meta:'Male · 31 years',   bio:'DevOps. I automate myself out of jobs.'},
+    {i:'N', name:'Nidhi Sharma', meta:'Female · 29 years', bio:'Full stack. Currently deep in TypeScript.'}
+  ];
+  var di = 0,
+      card   = document.getElementById('dcCard'),
+      photo  = document.getElementById('dcPhoto'),
+      nameEl = document.getElementById('dcName'),
+      metaEl = document.getElementById('dcMeta'),
+      bioEl  = document.getElementById('dcBio'),
+      toast  = document.getElementById('dcToast');
+  function dcNext(msg){
+    if(!card) return;
+    toast.textContent = msg;
+    card.classList.add('swap');
+    setTimeout(function(){
+      di = (di+1) % deck.length;
+      var p = deck[di];
+      photo.textContent = p.i; nameEl.textContent = p.name;
+      metaEl.textContent = p.meta; bioEl.textContent = p.bio;
+      card.classList.remove('swap');
+    }, reduce ? 0 : 180);
+    setTimeout(function(){ toast.textContent=''; }, 1600);
+  }
+  var dcC = document.getElementById('dcConnect'), dcI = document.getElementById('dcIgnore');
+  if(dcC){ dcC.addEventListener('click', function(){ dcNext('✓ Request sent'); }); }
+  if(dcI){ dcI.addEventListener('click', function(){ dcNext('Card skipped — they’ll never know'); }); }
+
+  /* ---- MindfulHub mood picker + AI suggestion ---- */
+  var moods = document.querySelectorAll('.mh-mood'),
+      sugg  = document.getElementById('mhSugg'),
+      suggestions = {
+        'Very Sad':'Be gentle with yourself today. A short walk, some water, and one small kind act for yourself can help. If this feeling persists, the Find a Counselor page is one tap away.',
+        'Sad':'Rough days happen. Try writing one paragraph in your journal about what weighed on you — naming it usually shrinks it.',
+        'Neutral':'A steady day is a fine day. A 5-minute stretch or a quick journal entry can nudge it upward.',
+        'Happy':'Nice! Consider noting what went well in your journal — future-you will want the recipe.',
+        'Very Happy':'Wonderful — bottle this. Write down what made today great, and maybe share a community story to pass it on.'
+      },
+      current = 'Neutral';
+  moods.forEach(function(m){
+    m.addEventListener('click', function(){
+      moods.forEach(function(x){ x.classList.remove('sel'); });
+      m.classList.add('sel');
+      current = m.dataset.m;
+      if(sugg.classList.contains('on')){ sugg.textContent = '✨ ' + suggestions[current]; }
+    });
+  });
+  var aiBtn = document.getElementById('mhAiBtn');
+  if(aiBtn){
+    aiBtn.addEventListener('click', function(){
+      sugg.textContent = '✨ ' + suggestions[current];
+      sugg.classList.add('on');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
